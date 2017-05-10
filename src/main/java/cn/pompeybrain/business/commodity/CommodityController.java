@@ -1,5 +1,6 @@
 package cn.pompeybrain.business.commodity;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +16,11 @@ import java.util.*;
 @RequestMapping("/commodity")
 public class CommodityController {
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @Autowired
+    private CommodityDao commodityDao;
 
-    public List<Map<String, String>> getAll() {
+    @RequestMapping(value = "/test")
+    public List<Map<String, String>> test() {
         List<Map<String, String>> resList = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Map<String, String> resMap = new HashMap<>();
@@ -25,6 +28,12 @@ public class CommodityController {
             resList.add(resMap);
         }
         return resList;
+    }
+
+    @RequestMapping(value = "/list")
+    public List<Commodity> list() {
+        List<Commodity> commodities = commodityDao.findAll();
+        return commodities;
     }
 
 }

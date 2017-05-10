@@ -1,19 +1,17 @@
-package cn.pompeybrain.business.commodity;
+package cn.pompeybrain.business.category;
 
 import java.util.Date;
 
 /**
- * 商品bean
- * Created by pompey on 2017/4/27.
+ * 商品类别
+ * Created by Administrator on 2017/5/10 0010.
  */
-public class Commodity {
+public class Category {
     private int id;
     private String name;
-    private double cost;
-    private double price;
+    private String description;
     private String unit;
-    private String category;
-    private int inventory;
+    private boolean available;
     private int createUserId;
     private Date createTime;
     private Date updateTime;
@@ -34,20 +32,12 @@ public class Commodity {
         this.name = name;
     }
 
-    public double getCost() {
-        return cost;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUnit() {
@@ -58,20 +48,12 @@ public class Commodity {
         this.unit = unit;
     }
 
-    public String getCategory() {
-        return category;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public int getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(int inventory) {
-        this.inventory = inventory;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public int getCreateUserId() {
