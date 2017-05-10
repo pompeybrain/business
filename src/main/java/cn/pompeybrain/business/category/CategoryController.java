@@ -24,4 +24,10 @@ public class CategoryController {
         return categories;
     }
 
+    @RequestMapping("/list")
+    List<Category> list() {
+        List<Category> categories = categoryDao.findAll();
+        return categories;
+    }
+
 }

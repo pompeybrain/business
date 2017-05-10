@@ -15,8 +15,8 @@ public class Commodity {
     private String category;
     private int inventory;
     private int createUserId;
-    private Date createTime;
-    private Date updateTime;
+    private String createTime;
+    private String updateTime;
 
     public int getId() {
         return id;
@@ -82,19 +82,19 @@ public class Commodity {
         this.createUserId = createUserId;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 }
