@@ -1,9 +1,7 @@
 package cn.pompeybrain.business.commodity;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -36,4 +34,14 @@ public class CommodityController {
         return commodities;
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    Commodity create(@RequestBody Commodity commodity) {
+        commodityService.create(commodity);
+        return commodity;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    int delete(@PathVariable int id) {
+        return commodityService.delete(id);
+    }
 }

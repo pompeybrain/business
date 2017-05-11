@@ -1,5 +1,6 @@
 package cn.pompeybrain.business.category;
 
+import cn.pompeybrain.business.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,14 +32,9 @@ public class CategoryController {
         return categories;
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     Category create(@RequestBody Category category) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String createTime = LocalDateTime.now().format(formatter);
-        String updateTime = LocalDateTime.now().format(formatter);
-        category.setCreateTime(createTime);
-        category.setUpdateTime(updateTime);
-        category.setCreateUserId(1); // 模拟当前用户为1
+        BaseUtil.setCommon(category);
         categoryDao.add(category);
         return category;
     }
@@ -55,12 +51,10 @@ public class CategoryController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     int update(@PathVariable int id, @RequestBody Category category) {
-        System.out.println(id);
-        if (id != category.getId()) {
-            category.setId(-1);
+        if (!BaseUtil.checkId(id, category))
             return 0;
-        }
         return categoryDao.update(category);
     }
+
 
 }

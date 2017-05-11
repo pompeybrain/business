@@ -1,20 +1,19 @@
 package cn.pompeybrain.business.category;
 
+import cn.pompeybrain.business.util.BaseBean;
+
 import java.util.Date;
 
 /**
  * 商品类别
  * Created by Administrator on 2017/5/10 0010.
  */
-public class Category {
+public class Category extends BaseBean {
     private int id;
     private String name;
     private String description;
     private String unit;
     private boolean available;
-    private int createUserId;
-    private String createTime;
-    private String updateTime;
 
     public int getId() {
         return id;
@@ -56,27 +55,4 @@ public class Category {
         this.available = available;
     }
 
-    public int getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(int createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
 }

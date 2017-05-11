@@ -1,9 +1,12 @@
 package cn.pompeybrain.business.commodity;
 
 import cn.pompeybrain.business.category.CategoryDao;
+import cn.pompeybrain.business.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,4 +50,20 @@ public class CommodityService {
         }
         return result;
     }
+
+    Commodity findById(int id) {
+        return commodityDao.findById(id);
+    }
+
+    Commodity create(Commodity commodity) {
+        BaseUtil.setCommon(commodity);
+        commodityDao.add(commodity);
+        return commodity;
+    }
+
+    int delete(int id) {
+        return commodityDao.delete(id);
+    }
+
+
 }

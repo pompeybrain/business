@@ -1,12 +1,14 @@
 package cn.pompeybrain.business.commodity;
 
+import cn.pompeybrain.business.util.BaseBean;
+
 import java.util.Date;
 
 /**
  * 商品bean
  * Created by pompey on 2017/4/27.
  */
-public class Commodity {
+public class Commodity extends BaseBean {
     private int id;
     private String name;
     private double cost;
@@ -14,9 +16,6 @@ public class Commodity {
     private String unit;
     private String category;
     private int inventory;
-    private int createUserId;
-    private String createTime;
-    private String updateTime;
 
     public int getId() {
         return id;
@@ -74,27 +73,4 @@ public class Commodity {
         this.inventory = inventory;
     }
 
-    public int getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(int createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
 }
