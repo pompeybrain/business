@@ -17,7 +17,7 @@ import java.util.*;
 public class CommodityController {
 
     @Autowired
-    private CommodityDao commodityDao;
+    private CommodityService commodityService;
 
     @RequestMapping(value = "/test")
     public List<Map<String, String>> test() {
@@ -31,8 +31,8 @@ public class CommodityController {
     }
 
     @RequestMapping(value = "/list")
-    public List<Commodity> list() {
-        List<Commodity> commodities = commodityDao.findAll();
+    public List<Map<String, List>> list() {
+        List<Map<String, List>> commodities = commodityService.findAll();
         return commodities;
     }
 

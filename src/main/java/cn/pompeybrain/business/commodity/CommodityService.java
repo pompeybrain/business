@@ -2,6 +2,7 @@ package cn.pompeybrain.business.commodity;
 
 import cn.pompeybrain.business.category.CategoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Map;
  * 商品相关逻辑
  * Created by Administrator on 2017/5/10 0010.
  */
+@Service
 public class CommodityService {
 
     @Autowired
@@ -19,25 +21,30 @@ public class CommodityService {
     @Autowired
     private CommodityDao commodityDao;
 
-    public List<Map<String, Object>> findAll() {
+    /*
+    * 按照可用分类获取商品列表
+    * */
+    public List<Map<String, List>> findAll() {
 
-        String[] categories = categoryDao.findAvailable();
+        List<Map<String, List>> result = new ArrayList<>();
 
-        List<Map<String, Object>> commdoties = new ArrayList<>();
+        List<String> categories = categoryDao.findAvailable();
+
+        for (int i = 0; i < categories.size(); i++) {
+            Map<String, List> categoryMap = new HashMap<>();
+            List<Commodity> commodityList = new ArrayList<>();
+            categoryMap.put(categories.get(i), commodityList);
+            result.add(categoryMap);
+        }
+
         List<Commodity> rawCommodities = commodityDao.findAll();
 
-        String currentCategory = "";
-        List<Commodity> categoryCommodities = new ArrayList<>();
-        Map<String, Object> categoryCommodityMap = new HashMap<>();
-//
-//        for (Commodity commodity : rawCommodities) {
-//            if ((!commodity.getCategory().equals(currentCategory)) && categoryCommodities.size() > 0) {
-//                commdoties.add(categoryCommodityMap);
-//                categoryCommodityMap = new HashMap<>();
-//            } else {
-//
-//            }
-//        }
-        return commdoties;
+        for (Commodity commodity : rawCommodities) {
+            int index = categories.indexOf(commodity.getCategory());
+            if (index != -1) {
+                result.get(index).get(commodity.getCategory()).add(commodity);
+            }
+        }
+        return result;
     }
 }

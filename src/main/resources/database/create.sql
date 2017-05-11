@@ -50,15 +50,15 @@ CREATE TABLE commodity
 (
   id             INT         NOT NULL AUTO_INCREMENT,
   name           VARCHAR(32) NOT NULL,
-  cost           DOUBLE               DEFAULT 0
+  cost           DOUBLE
   COMMENT '成本',
-  price          DOUBLE               DEFAULT 0
+  price          DOUBLE
   COMMENT '定价',
   unit           VARCHAR(32) COMMENT '单位',
   category       VARCHAR(32),
-  inventory      INT                  DEFAULT 0
+  inventory      INT
   COMMENT '库存',
-  create_user_id INT         NOT NULL,
+  create_user_id INT,
   create_time    DATETIME,
   update_time    DATETIME,
   PRIMARY KEY (id)
