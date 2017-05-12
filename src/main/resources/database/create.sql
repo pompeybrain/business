@@ -7,8 +7,6 @@
 DROP TABLE IF EXISTS asset_record;
 
 
-DROP TABLE IF EXISTS consumer;
-
 DROP TABLE IF EXISTS date_statistics;
 
 DROP TABLE IF EXISTS inventory_record;
@@ -99,6 +97,26 @@ CREATE TABLE user
 
 
 /*==============================================================*/
+/* Table: consumer                                              */
+/*==============================================================*/
+DROP TABLE IF EXISTS consumer;
+
+CREATE TABLE consumer
+(
+  id             INT NOT NULL AUTO_INCREMENT,
+  name           VARBINARY(32),
+  phone          VARBINARY(32),
+  address        VARBINARY(32),
+  credit         DOUBLE,
+  create_user_id INT,
+  create_time    DATETIME,
+  update_time    DATETIME,
+  PRIMARY KEY (id)
+)
+  COMMENT '客户表';
+
+
+/*==============================================================*/
 /* Table: asset_record                                          */
 /*==============================================================*/
 CREATE TABLE asset_record
@@ -115,25 +133,6 @@ CREATE TABLE asset_record
 ALTER TABLE asset_record
   COMMENT '资产记录表';
 
-
-/*==============================================================*/
-/* Table: consumer                                              */
-/*==============================================================*/
-CREATE TABLE consumer
-(
-  id             INT NOT NULL,
-  name           VARBINARY(32),
-  phone          VARBINARY(32),
-  address        VARBINARY(32),
-  credit         DOUBLE,
-  create_user_id INT,
-  create_time    DATETIME,
-  update_time    DATETIME,
-  PRIMARY KEY (id)
-);
-
-ALTER TABLE consumer
-  COMMENT '客户表';
 
 /*==============================================================*/
 /* Table: date_statistics                                       */

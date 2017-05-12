@@ -14,8 +14,9 @@ public class Test {
         String createTime = LocalDateTime.now().format(formatter);
 
         System.out.println("test");
-
-        System.out.println(createTime);
+        String testStr = "business/api/login";
+        System.out.println(testStr.matches("(.*)/login$"));
+//        System.out.println(createTime);
     }
 
 }

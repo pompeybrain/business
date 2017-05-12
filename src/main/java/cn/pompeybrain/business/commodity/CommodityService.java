@@ -27,17 +27,17 @@ public class CommodityService {
     /*
     * 按照可用分类获取商品列表
     * */
-    public List<Map<String, List>> findAll() {
+    public Map<String, Object> findWithCategory() {
 
-        List<Map<String, List>> result = new ArrayList<>();
+        Map<String, Object> result = new HashMap<>();
 
         List<String> categories = categoryDao.findAvailable();
 
+        List<List<Commodity>> commodities = new ArrayList<>();
+
         for (int i = 0; i < categories.size(); i++) {
-            Map<String, List> categoryMap = new HashMap<>();
             List<Commodity> commodityList = new ArrayList<>();
-            categoryMap.put(categories.get(i), commodityList);
-            result.add(categoryMap);
+            commodities.add(commodityList);
         }
 
         List<Commodity> rawCommodities = commodityDao.findAll();
@@ -45,9 +45,11 @@ public class CommodityService {
         for (Commodity commodity : rawCommodities) {
             int index = categories.indexOf(commodity.getCategory());
             if (index != -1) {
-                result.get(index).get(commodity.getCategory()).add(commodity);
+                commodities.get(index).add(commodity);
             }
         }
+        result.put("categories", categories);
+        result.put("commodities", commodities);
         return result;
     }
 
@@ -65,5 +67,17 @@ public class CommodityService {
         return commodityDao.delete(id);
     }
 
+    int update(Commodity commodity) {
+        return commodityDao.update(commodity);
+    }
+
+    int addInventory(int id, double amount, int increment) {
+        Commodity commodity = commodityDao.findById(id);
+        int newInventory = commodity.getInventory() + increment;
+        double newCost = (commodity.getCost() * commodity.getInventory() + amount) / newInventory;
+        commodity.setInventory(newInventory);
+        commodity.setCost(newCost);
+        return commodityDao.update(commodity);
+    }
 
 }

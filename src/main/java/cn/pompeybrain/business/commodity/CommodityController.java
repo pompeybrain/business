@@ -29,9 +29,9 @@ public class CommodityController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Map<String, List>> list() {
-        List<Map<String, List>> commodities = commodityService.findAll();
-        return commodities;
+    public Map<String, Object> list() {
+        Map<String, Object> result = commodityService.findWithCategory();
+        return result;
     }
 
     @RequestMapping(method = RequestMethod.POST)

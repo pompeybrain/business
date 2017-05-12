@@ -59,3 +59,26 @@ INSERT INTO user (name, password_digest, phone, role, status, create_user_id, cr
 VALUES
   ('销售2', '098f6bcd4621d373cade4e832627b4f6', '13121708229', 3, FALSE, 0, '2017-03-10 12:00:00',
    '2017-03-22 15:00:00');
+
+/*==============================================================*/
+/* Table: consumer                                              */
+/*==============================================================*/
+
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('李秀英', '15153822830', '凤阳县', 3000, 1, '2017-03-10 12:00:00',
+        '2017-03-21 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('李杰', '15153808225', '凤阳县', 5000, 1, '2017-03-10 12:00:00',
+        '2017-03-21 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('刘晨', '13865832873', '凤阳县', 10000, 1, '2017-03-10 12:00:00',
+        '2017-03-21 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('张东海', '13183962028', '凤阳县', 0, 1, '2017-03-10 12:00:00',
+        '2017-03-21 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('王安', '13153802835', '凤阳县', 300, 1, '2017-03-10 12:00:00',
+        '2017-03-21 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('', '15153822833', '凤阳县', 0, 1, '2017-03-10 12:00:00',
+        '2017-03-21 14:00:00');

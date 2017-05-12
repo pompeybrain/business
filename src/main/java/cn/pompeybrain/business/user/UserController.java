@@ -29,7 +29,6 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     int login(@RequestBody Map<String, String> loginForm, HttpSession session) {
-        System.out.println(loginForm);
         String userName = loginForm.get("name");
         String passwordDigest = loginForm.get("password");
         String role = loginForm.get("role");
@@ -38,11 +37,9 @@ public class UserController {
             session.setAttribute("userId", user.getId());
             session.setAttribute("user", userName);
             session.setAttribute("role", role);
-        } else {
-            return 0;
+            return user.getId();
         }
-        return user.getId();
+        return 0;
     }
-
 
 }

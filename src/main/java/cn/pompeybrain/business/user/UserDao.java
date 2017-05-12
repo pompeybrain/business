@@ -29,9 +29,6 @@ public interface UserDao {
     @Delete("delete from user where id = #{id};")
     int delete(int id);
 
-    @Update("update user set name = #{name}, password_digest = #{passwordDigest}, phone = #{phone}, update_time = #{updateTime} where id = #{id};")
+    @Update("update user set name = #{name}, password_digest = #{passwordDigest}, phone = #{phone}, status = #{status}, update_time = #{updateTime} where id = #{id};")
     int update(User user);
-
-    @Update("update user set status = false where id = #{id};")
-    int mockDelete(int id);
 }

@@ -27,4 +27,5 @@ public interface CommodityDao {
 
     @Update("update commodity set name = #{name}, cost = #{cost}, price = #{price}, unit = #{unit}, category = #{category}, update_time = #{updateTime} where id = #{id};")
     int update(Commodity commodity);
+
 }

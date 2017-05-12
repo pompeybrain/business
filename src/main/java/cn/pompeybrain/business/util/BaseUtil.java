@@ -23,4 +23,10 @@ public class BaseUtil {
         }
         return true;
     }
+
+    public static void updateTime(BaseBean baseBean) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String updateTime = LocalDateTime.now().format(formatter);
+        baseBean.setUpdateTime(updateTime);
+    }
 }

@@ -16,23 +16,16 @@ import java.io.IOException;
  * Created by Administrator on 2017/5/12 0012.
  */
 @WebFilter(filterName = "loginFilter", urlPatterns = "/*")
-@Component
+//@Component
 public class LoginFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println(request.getRequestURI());
         HttpSession session = request.getSession();
-        if (session.getAttribute("user") == null && request.getRequestURI().matches("login")) {
-            System.out.println("未登录");
+        if (!request.getRequestURI().matches("(.*)/login$") && session.getAttribute("user") == null) {
+            System.out.println("未登录请求");
             response.sendError(0, "not login");
-
         } else {
             filterChain.doFilter(request, response);
         }
-    }
-
-    @Override
-    public void destroy() {
-        System.out.println("destroy filter");
     }
 }
