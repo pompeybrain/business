@@ -17,9 +17,6 @@ DROP TABLE IF EXISTS "order";
 
 DROP TABLE IF EXISTS payment_record;
 
-DROP TABLE IF EXISTS role;
-
-DROP TABLE IF EXISTS user;
 
 /*==============================================================*/
 /* Table: category                                              */
@@ -64,6 +61,41 @@ CREATE TABLE commodity
   PRIMARY KEY (id)
 )
   COMMENT '商品表';
+
+/*==============================================================*/
+/* Table: role                                                  */
+/*==============================================================*/
+DROP TABLE IF EXISTS role;
+
+CREATE TABLE role
+(
+  id          INT NOT NULL AUTO_INCREMENT,
+  name        VARCHAR(32),
+  description VARCHAR(255),
+  addable     TINYINT COMMENT '是否允许增加此角色用户',
+  PRIMARY KEY (id)
+)
+  COMMENT '角色表';
+
+/*==============================================================*/
+/* Table: user                                                  */
+/*==============================================================*/
+DROP TABLE IF EXISTS user;
+
+CREATE TABLE user
+(
+  id              INT NOT NULL AUTO_INCREMENT,
+  name            VARCHAR(32),
+  password_digest VARCHAR(255) COMMENT '密码密文',
+  phone           VARCHAR(32),
+  role            INT,
+  status          TINYINT,
+  create_user_id  INT,
+  create_time     DATETIME,
+  update_time     DATETIME,
+  PRIMARY KEY (id)
+)
+  COMMENT '用户表';
 
 
 /*==============================================================*/
@@ -179,38 +211,6 @@ CREATE TABLE payment_record
 ALTER TABLE payment_record
   COMMENT '客户付款记录表';
 
-/*==============================================================*/
-/* Table: role                                                  */
-/*==============================================================*/
-CREATE TABLE role
-(
-  id          INT,
-  name        VARCHAR(32),
-  description VARCHAR(255),
-  usable      TINYINT
-);
-
-ALTER TABLE role
-  COMMENT '角色表';
-
-/*==============================================================*/
-/* Table: user                                                  */
-/*==============================================================*/
-CREATE TABLE user
-(
-  id              INT NOT NULL,
-  name            VARCHAR(32),
-  password_digest VARCHAR(255),
-  phone           VARCHAR(32),
-  role            VARCHAR(32),
-  status          VARCHAR(32),
-  create_time     DATETIME,
-  update_time     DATETIME,
-  PRIMARY KEY (id)
-);
-
-ALTER TABLE user
-  COMMENT '用户表';
 
 ALTER TABLE inventory_record
   ADD CONSTRAINT FK_inventory_ref FOREIGN KEY (commodity_id)

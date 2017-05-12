@@ -33,3 +33,29 @@ VALUES ('木板1*2', 60, 70, '张', '木板', 0, 1, '2017-03-01 12:00:00', '2017
 INSERT INTO commodity (name, cost, price, unit, category, inventory, create_user_id, create_time, update_time)
 VALUES ('木板1.2*2.44', 100, 120, '张', '木板', 0, 1, '2017-03-01 12:00:00', '2017-03-01 12:00:00');
 
+/*==============================================================*/
+/* Table: role                                                  */
+/*==============================================================*/
+INSERT INTO role (name, description, addable) VALUES ('经理', '系统管理员角色', FALSE);
+INSERT INTO role (name, description, addable) VALUES ('采购', '负责采购', TRUE);
+INSERT INTO role (name, description, addable) VALUES ('销售', '负责订单商品管理', TRUE);
+
+/*==============================================================*/
+/* Table: user                                                  */
+/*==============================================================*/
+INSERT INTO user (name, password_digest, phone, role, status, create_user_id, create_time, update_time)
+VALUES
+  ('经理', '098f6bcd4621d373cade4e832627b4f6', '13121708225', 1, TRUE, 0, '2017-03-10 12:00:00',
+   '2017-03-21 14:00:00');
+INSERT INTO user (name, password_digest, phone, role, status, create_user_id, create_time, update_time)
+VALUES
+  ('采购1', '098f6bcd4621d373cade4e832627b4f6', '13121708226', 2, TRUE, 0, '2017-03-10 12:00:00',
+   '2017-03-21 14:00:00');
+INSERT INTO user (name, password_digest, phone, role, status, create_user_id, create_time, update_time)
+VALUES
+  ('销售1', '098f6bcd4621d373cade4e832627b4f6', '13121708227', 3, TRUE, 0, '2017-03-10 12:00:00',
+   '2017-03-21 14:00:00');
+INSERT INTO user (name, password_digest, phone, role, status, create_user_id, create_time, update_time)
+VALUES
+  ('销售2', '098f6bcd4621d373cade4e832627b4f6', '13121708229', 3, FALSE, 0, '2017-03-10 12:00:00',
+   '2017-03-22 15:00:00');
