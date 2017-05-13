@@ -66,19 +66,56 @@ VALUES
 
 INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
 VALUES ('李秀英', '15153822830', '凤阳县', 3000, 1, '2017-03-10 12:00:00',
+        '2017-03-11 14:00:00');
+
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('李杰', '15153808225', '江山市', 5000, 1, '2017-03-10 14:00:00',
+        '2017-03-10 18:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('刘晨', '13865832873', '常山县', 10000, 1, '2017-03-11 12:00:00',
+        '2017-03-12 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('张东海', '13183962028', '嵊泗县', 0, 1, '2017-03-05 12:00:00',
+        '2017-03-08 15:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('王安', '13903172157', '台州市', 300, 1, '2017-03-18 12:00:00',
+        '2017-03-20 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('王海', '15153822833', '龙游县', 0, 1, '2017-03-16 12:00:00',
         '2017-03-21 14:00:00');
 INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
-VALUES ('李杰', '15153808225', '凤阳县', 5000, 1, '2017-03-10 12:00:00',
-        '2017-03-21 14:00:00');
+VALUES ('曹昆', '18303517744', '灵璧县', 3000, 1, '2017-04-06 12:00:00',
+        '2017-04-12 06:00:00');
 INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
-VALUES ('刘晨', '13865832873', '凤阳县', 10000, 1, '2017-03-10 12:00:00',
-        '2017-03-21 14:00:00');
+VALUES ('何羽衣', '15219466201', '无为县', 5000, 1, '2017-04-10 12:00:00',
+        '2017-04-16 14:00:00');
 INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
-VALUES ('张东海', '13183962028', '凤阳县', 0, 1, '2017-03-10 12:00:00',
-        '2017-03-21 14:00:00');
+VALUES ('高淑贤', '15219466204', '庐江县', 10000, 1, '2017-04-10 12:00:00',
+        '2017-04-21 14:00:00');
 INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
-VALUES ('王安', '13153802835', '凤阳县', 300, 1, '2017-03-10 12:00:00',
-        '2017-03-21 14:00:00');
+VALUES ('李刚', '18876941131', '萧县', 0, 1, '2017-02-09 12:00:00',
+        '2017-03-20 14:00:00');
 INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
-VALUES ('', '15153822833', '凤阳县', 0, 1, '2017-03-10 12:00:00',
-        '2017-03-21 14:00:00');
+VALUES ('徐婷婷', '18876941139', '沂水县', 300, 1, '2017-03-20 12:00:00',
+        '2017-04-28 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('朱小玲', '18352936688', '苍山县', 0, 1, '2017-03-10 12:00:00',
+        '2017-05-01 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('黄登高', '18352939688', '沂南县', 3000, 1, '2017-02-10 13:00:00',
+        '2017-03-20 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('马杰', '15777770130', '费县', 5000, 1, '2017-03-18 12:00:00',
+        '2017-05-02 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('汪佳丽', '13632577333', '孝昌县', 10000, 1, '2017-04-10 12:00:00',
+        '2017-04-20 19:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('张东海', '15777770138', '大悟县', 0, 1, '2017-05-10 12:00:00',
+        '2017-05-12 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('范佳慧', '13153802835', '云梦县', 300, 1, '2017-05-10 12:00:00',
+        '2017-04-22 14:00:00');
+INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
+VALUES ('刘永杰', '13632577363', '开县', 0, 1, '2017-04-10 12:00:00',
+        '2017-04-21 14:00:00');

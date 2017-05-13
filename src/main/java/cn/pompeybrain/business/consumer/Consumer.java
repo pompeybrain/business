@@ -8,7 +8,7 @@ import cn.pompeybrain.business.util.BaseBean;
  */
 public class Consumer extends BaseBean {
     private String name;
-    private String pohone;
+    private String phone;
     private String address;
     private double credit;
 
@@ -20,12 +20,12 @@ public class Consumer extends BaseBean {
         this.name = name;
     }
 
-    public String getPohone() {
-        return pohone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPohone(String pohone) {
-        this.pohone = pohone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAddress() {

@@ -104,9 +104,9 @@ DROP TABLE IF EXISTS consumer;
 CREATE TABLE consumer
 (
   id             INT NOT NULL AUTO_INCREMENT,
-  name           VARBINARY(32),
-  phone          VARBINARY(32),
-  address        VARBINARY(32),
+  name           VARCHAR(32),
+  phone          VARCHAR(32),
+  address        VARCHAR(32),
   credit         DOUBLE,
   create_user_id INT,
   create_time    DATETIME,

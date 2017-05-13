@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户表逻辑
@@ -36,7 +37,14 @@ public class ConsumerService {
     }
 
     //    need fix
-    List<Consumer> search() {
-        return null;
+    List<Consumer> search(Map<String, Object> condition) {
+        int pageNo = Integer.parseInt(condition.get("pageNo").toString());
+        int pageSize = Integer.parseInt(condition.get("pageSize").toString());
+        int offset = (pageNo - 1) * pageSize;
+        if (offset < 0) {
+            offset = 0;
+        }
+        condition.put("offset", offset);
+        return consumerDao.findByCondition(condition);
     }
 }

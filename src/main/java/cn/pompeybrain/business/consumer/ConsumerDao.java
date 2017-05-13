@@ -1,8 +1,10 @@
 package cn.pompeybrain.business.consumer;
 
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Consumer数据库接口
@@ -19,16 +21,34 @@ public interface ConsumerDao {
     @Select("select * from consumer where id = #{id}")
     Consumer findById(int id);
 
-    @Select("select * from consumer;")
-    List<Consumer> findAll();
-
-    //    need add if support
-    @Select("select * from consumer where name like '%#{name}%' limit #{limitation};")
-    List<Consumer> findByName(@Param("name") String name, @Param("limitation") int limitation);
+    @Select("select count(1) from consumer;")
+    int count();
 
     @Delete("delete from consumer where id = #{id};")
     int delete(int id);
 
     @Update("UPDATE consumer SET name = #{name}, phone = #{phone}, address = #{address}, credit = #{credit}, update_time = #{updateTime} where id = #{id}")
     int update(Consumer consumer);
+
+
+    @SelectProvider(type = UserSqlProvider.class, method = "findByCondition")
+    List<Consumer> findByCondition(Map<String, Object> condition);
+
+    class UserSqlProvider {
+        public String findByCondition(Map<String, Object> condition) {
+            String sql = new SQL() {
+                {
+                    SELECT("*");
+                    FROM("consumer");
+                    WHERE("name like #{name}");
+                    WHERE("phone like #{phone}");
+                    WHERE("address like #{address}");
+                    ORDER_BY("update_time DESC");
+                }
+            }.toString() + " limit #{offset}, #{pageSize}";
+            System.out.println(sql);
+            System.out.println(condition.get("pageSize"));
+            return sql;
+        }
+    }
 }
