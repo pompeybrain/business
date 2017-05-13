@@ -11,7 +11,6 @@ DROP TABLE IF EXISTS date_statistics;
 
 DROP TABLE IF EXISTS inventory_record;
 
-DROP TABLE IF EXISTS "order";
 
 DROP TABLE IF EXISTS payment_record;
 
@@ -115,6 +114,27 @@ CREATE TABLE consumer
 )
   COMMENT '客户表';
 
+/*==============================================================*/
+/* Table: "order"                                               */
+/*==============================================================*/
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order`
+(
+  id             INT NOT NULL AUTO_INCREMENT,
+  consumer_id    INT,
+  consumer_name  VARCHAR(32),
+  commodities    VARCHAR(10240) COMMENT '该订单包含的商品信息json',
+  total          DOUBLE,
+  credit         DOUBLE,
+  payments       VARCHAR(10240) COMMENT '该订单的付款记录',
+  status         INT,
+  create_user_id INT,
+  create_time    DATETIME,
+  update_time    DATETIME,
+  PRIMARY KEY (id)
+)
+  COMMENT '订单表';
+
 
 /*==============================================================*/
 /* Table: asset_record                                          */
@@ -170,27 +190,6 @@ CREATE TABLE inventory_record
 ALTER TABLE inventory_record
   COMMENT '库存变更记录表';
 
-/*==============================================================*/
-/* Table: "order"                                               */
-/*==============================================================*/
-CREATE TABLE "order"
-(
-  id             INT NOT NULL,
-  consumer_id    INT,
-  consumer_name  VARCHAR(32),
-  commodities    VARCHAR(65535),
-  total          DOUBLE,
-  credit         DOUBLE,
-  payments       VARCHAR(65535),
-  status         VARCHAR(32),
-  create_user_id INT,
-  create_time    DATETIME,
-  update_time    DATETIME,
-  PRIMARY KEY (id)
-);
-
-ALTER TABLE "order"
-  COMMENT '订单表';
 
 /*==============================================================*/
 /* Table: payment_record                                        */
