@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface CommodityDao {
 
-    @Insert("INSERT INTO commodity (name, cost, price, unit, category, inventory, create_user_id, create_time, update_time) VALUES (#{name},#{cost},#{price},#{unit},#{category},#{inventory}#{createUserId},#{createTime},#{updateTime});")
+    @Insert("INSERT INTO commodity (name, cost, price, unit, category, inventory, create_user_id, create_time, update_time) VALUES (#{name},#{cost},#{price},#{unit},#{category},#{inventory},#{createUserId},#{createTime},#{updateTime});")
     @Options(useGeneratedKeys = true)
     int add(Commodity commodity);
 

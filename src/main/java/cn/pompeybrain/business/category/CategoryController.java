@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * category外部接口
@@ -26,10 +29,22 @@ public class CategoryController {
         return categories;
     }
 
-    @RequestMapping("/list")
-    List<Category> list() {
-        List<Category> categories = categoryDao.findAll();
-        return categories;
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    Map<String, List> list() {
+        List<Category> rawRategories = categoryDao.findAll();
+        Map<String, List> result = new HashMap<>();
+        List<Category> availables = new ArrayList<>();
+        List<Category> unavailables = new ArrayList<>();
+        for (Category category : rawRategories) {
+            if (category.isAvailable()) {
+                availables.add(category);
+            } else {
+                unavailables.add(category);
+            }
+        }
+        result.put("availables", availables);
+        result.put("unavailables", unavailables);
+        return result;
     }
 
     @RequestMapping(method = RequestMethod.POST)

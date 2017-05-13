@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface UserDao {
 
-    @Insert("INSERT INTO user (name, password_digest, phone, status, create_user_id, create_time, update_time) VALUES (#{name},#{passwordDigest},#{phone},#{role},#{status},#{createUserId},#{createTime},#{updateTime});")
+    @Insert("INSERT INTO user (name, password_digest, phone, role, status, create_user_id, create_time, update_time) VALUES (#{name},#{passwordDigest},#{phone},#{role},#{status},#{createUserId},#{createTime},#{updateTime});")
     @Options(useGeneratedKeys = true)
     int add(User user);
 

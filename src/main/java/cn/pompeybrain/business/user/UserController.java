@@ -1,12 +1,15 @@
 package cn.pompeybrain.business.user;
 
+import cn.pompeybrain.business.category.Category;
+import cn.pompeybrain.business.commodity.Commodity;
+import cn.pompeybrain.business.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,11 +24,47 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    Map<String, List> list() {
+        List<User> rawUsers = userDao.findAll();
+        Map<String, List> result = new HashMap<>();
+        List<User> availables = new ArrayList<>();
+        List<User> unavailables = new ArrayList<>();
+        for (User user : rawUsers) {
+            if (user.isStatus()) {
+                availables.add(user);
+            } else {
+                unavailables.add(user);
+            }
+        }
+        result.put("availables", availables);
+        result.put("unavailables", unavailables);
+        return result;
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     int create(@RequestBody User user) {
         userDao.add(user);
         return user.getId();
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    User update(@PathVariable int id) {
+        return userDao.findById(id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    int update(@PathVariable int id, @RequestBody User user) {
+        if (!BaseUtil.checkId(id, user))
+            return 0;
+        return userDao.update(user);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    int delete(@PathVariable int id) {
+        return userDao.delete(id);
+    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     int login(@RequestBody Map<String, String> loginForm, HttpSession session) {
@@ -41,5 +80,4 @@ public class UserController {
         }
         return 0;
     }
-
 }

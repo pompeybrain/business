@@ -20,10 +20,12 @@ import java.io.IOException;
 public class LoginFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         if (!request.getRequestURI().matches("(.*)/login$") && session.getAttribute("user") == null) {
             System.out.println("未登录请求");
             response.sendError(0, "not login");
+        } else if (request.getRequestURI().matches("(.*)/logout$")) {
+            session.removeAttribute("user");
         } else {
             filterChain.doFilter(request, response);
         }
