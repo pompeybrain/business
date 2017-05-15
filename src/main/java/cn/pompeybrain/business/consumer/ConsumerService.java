@@ -36,7 +36,6 @@ public class ConsumerService {
         return consumerDao.update(consumer);
     }
 
-    //    need fix
     List<Consumer> search(Map<String, Object> condition) {
         int pageNo = Integer.parseInt(condition.get("pageNo").toString());
         int pageSize = Integer.parseInt(condition.get("pageSize").toString());

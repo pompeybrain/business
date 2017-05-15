@@ -18,7 +18,7 @@ public class ConsumerController {
     @Autowired
     private ConsumerService consumerService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
     public List<Consumer> list(@RequestBody Map<String, Object> condition) {
         return consumerService.search(condition);
     }

@@ -19,21 +19,15 @@ public class CommodityController {
     @Autowired
     private CommodityService commodityService;
 
-    @RequestMapping(value = "/test")
-    public List<Map<String, String>> test() {
-        List<Map<String, String>> resList = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            Map<String, String> resMap = new HashMap<>();
-            resMap.put("" + i, "content" + i);
-            resList.add(resMap);
-        }
-        return resList;
-    }
-
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Map<String, Object> list() {
         Map<String, Object> result = commodityService.findWithCategory();
         return result;
+    }
+
+    @RequestMapping(value = "/option", method = RequestMethod.GET)
+    public List<Map<String, Object>> option() {
+        return commodityService.findOptions();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -58,4 +52,6 @@ public class CommodityController {
     int delete(@PathVariable int id) {
         return commodityService.delete(id);
     }
+
+
 }

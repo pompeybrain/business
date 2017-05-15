@@ -53,6 +53,40 @@ public class CommodityService {
         return result;
     }
 
+    /*
+    * 提供前端嵌套选择的商品数组
+    * */
+    public List<Map<String, Object>> findOptions() {
+        List<Map<String, Object>> result = new ArrayList<>();
+        List<String> categories = categoryDao.findAvailable();
+        List<Commodity> rawCommodities = commodityDao.findAll();
+        List<List<Map<String, String>>> middleCommodities = new ArrayList<>();
+
+        for (int i = 0; i < categories.size(); i++) {
+            middleCommodities.add(new ArrayList<>());
+        }
+
+        for (Commodity commodity : rawCommodities) {
+            int index = categories.indexOf(commodity.getCategory());
+            if (index != -1) {
+                Map<String, String> commodityMap = new HashMap<>();
+                commodityMap.put("value", String.valueOf(commodity.getId()));
+                commodityMap.put("label", commodity.getName());
+                middleCommodities.get(index).add(commodityMap);
+            }
+        }
+
+        for (int i = 0; i < categories.size(); i++) {
+            Map<String, Object> categoryMap = new HashMap<>();
+            categoryMap.put("value", categories.get(i));
+            categoryMap.put("label", categories.get(i));
+            categoryMap.put("children", middleCommodities.get(i));
+            result.add(categoryMap);
+        }
+        return result;
+    }
+
+
     Commodity findById(int id) {
         return commodityDao.findById(id);
     }

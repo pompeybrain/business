@@ -3,18 +3,6 @@
 /* Created on:     2017/4/24 8:58:47                            */
 /*==============================================================*/
 
-
-DROP TABLE IF EXISTS asset_record;
-
-
-DROP TABLE IF EXISTS date_statistics;
-
-DROP TABLE IF EXISTS inventory_record;
-
-
-DROP TABLE IF EXISTS payment_record;
-
-
 /*==============================================================*/
 /* Table: category                                              */
 /*==============================================================*/
@@ -33,7 +21,6 @@ CREATE TABLE category
   PRIMARY KEY (id)
 )
   COMMENT '商品类别表';
-
 
 /*==============================================================*/
 /* Table: commodity                                             */
@@ -135,80 +122,76 @@ CREATE TABLE `order`
 )
   COMMENT '订单表';
 
-
-/*==============================================================*/
-/* Table: asset_record                                          */
-/*==============================================================*/
-CREATE TABLE asset_record
-(
-  id          INT NOT NULL,
-  type        VARCHAR(32),
-  old_asset   DOUBLE,
-  variation   DOUBLE,
-  new_asset   DOUBLE,
-  create_time DATETIME,
-  PRIMARY KEY (id)
-);
-
-ALTER TABLE asset_record
-  COMMENT '资产记录表';
-
-
-/*==============================================================*/
-/* Table: date_statistics                                       */
-/*==============================================================*/
-CREATE TABLE date_statistics
-(
-  date         DATE,
-  order_num    INT,
-  tuenover     DOUBLE,
-  credit_num   INT,
-  total_credit DOUBLE
-);
-
-ALTER TABLE date_statistics
-  COMMENT '按日期统计记录表';
-
 /*==============================================================*/
 /* Table: inventory_record                                      */
 /*==============================================================*/
+DROP TABLE IF EXISTS inventory_record;
+
 CREATE TABLE inventory_record
 (
-  id             INT NOT NULL,
+  id             INT NOT NULL AUTO_INCREMENT,
   commodity_id   INT,
-  type           VARCHAR(32),
   old_inventory  INT,
-  variation      INT,
+  addition       INT,
   amount         DOUBLE,
   cost           DOUBLE,
-  new_inventory  DOUBLE,
+  new_inventory  INT,
   create_user_id INT,
   create_time    DATETIME,
   PRIMARY KEY (id)
-);
-
-ALTER TABLE inventory_record
+)
   COMMENT '库存变更记录表';
 
 
 /*==============================================================*/
 /* Table: payment_record                                        */
 /*==============================================================*/
+DROP TABLE IF EXISTS payment_record;
+
 CREATE TABLE payment_record
 (
-  id             INT NOT NULL,
+  id             INT NOT NULL AUTO_INCREMENT,
   consumer_id    INT,
-  type           VARCHAR(32),
+  type           INT,
   money          DOUBLE,
-  ref_orders     VARCHAR(65535),
+  ref_orders     VARCHAR(10240),
   create_user_id INT,
   create_time    DATETIME,
   PRIMARY KEY (id)
-);
-
-ALTER TABLE payment_record
+)
   COMMENT '客户付款记录表';
 
+/*==============================================================*/
+/* Table: asset_record                                          */
+/*==============================================================*/
+DROP TABLE IF EXISTS asset_record;
+
+CREATE TABLE asset_record
+(
+  id          INT NOT NULL AUTO_INCREMENT,
+  type        TINYINT,
+  old_asset   DOUBLE,
+  variation   DOUBLE,
+  new_asset   DOUBLE,
+  create_time DATETIME,
+  PRIMARY KEY (id)
+)
+  COMMENT '资产记录表';
+
+
+/*==============================================================*/
+/* Table: date_statistics                                       */
+/*==============================================================*/
+DROP TABLE IF EXISTS date_statistics;
+CREATE TABLE date_statistics
+(
+  date         DATE,
+  order_num    INT,
+  turnover     DOUBLE,
+  credit_num   INT,
+  total_credit DOUBLE
+)
+  COMMENT '按日期统计记录表';
 
 ALTER TABLE inventory_record
   ADD CONSTRAINT FK_inventory_ref FOREIGN KEY (commodity_id)
@@ -227,4 +210,3 @@ ALTER TABLE payment_record
 REFERENCES consumer (id)
   ON DELETE RESTRICT
   ON UPDATE RESTRICT;
-
