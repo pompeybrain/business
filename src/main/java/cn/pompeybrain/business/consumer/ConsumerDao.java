@@ -19,13 +19,13 @@ public interface ConsumerDao {
     int add(Consumer consumer);
 
     @Select("select * from consumer where id = #{id}")
-    Consumer findById(int id);
+    Consumer findById(@Param("id") int id);
 
     @Select("select count(1) from consumer;")
     int count();
 
     @Delete("delete from consumer where id = #{id};")
-    int delete(int id);
+    int delete(@Param("id") int id);
 
     @Update("UPDATE consumer SET name = #{name}, phone = #{phone}, address = #{address}, credit = #{credit}, update_time = #{updateTime} where id = #{id}")
     int update(Consumer consumer);
@@ -46,8 +46,6 @@ public interface ConsumerDao {
                     ORDER_BY("update_time DESC");
                 }
             }.toString() + " limit #{offset}, #{pageSize}";
-            System.out.println(sql);
-            System.out.println(condition.get("pageSize"));
             return sql;
         }
     }

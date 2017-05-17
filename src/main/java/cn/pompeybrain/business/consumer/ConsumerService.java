@@ -18,25 +18,25 @@ public class ConsumerService {
     @Autowired
     ConsumerDao consumerDao;
 
-    Consumer findById(int id) {
+    public Consumer findById(int id) {
         return consumerDao.findById(id);
     }
 
-    Consumer create(Consumer consumer) {
+    public Consumer create(Consumer consumer) {
         BaseUtil.setCommon(consumer);
         consumerDao.add(consumer);
         return consumer;
     }
 
-    int delete(int id) {
+    public int delete(int id) {
         return consumerDao.delete(id);
     }
 
-    int update(Consumer consumer) {
+    public int update(Consumer consumer) {
         return consumerDao.update(consumer);
     }
 
-    List<Consumer> search(Map<String, Object> condition) {
+    public List<Consumer> search(Map<String, Object> condition) {
         int pageNo = Integer.parseInt(condition.get("pageNo").toString());
         int pageSize = Integer.parseInt(condition.get("pageSize").toString());
         int offset = (pageNo - 1) * pageSize;
