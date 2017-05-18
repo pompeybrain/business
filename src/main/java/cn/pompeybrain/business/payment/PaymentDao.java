@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface PaymentDao {
 
-    @Insert("insert into payment_record (consumer_id, type, money, refOrders, create_user_id, create_time) VALUES (#{consumerId}, #{type}, #{money}, #{refOrders}, #{createUserId}, #{createTime});")
+    @Insert("insert into payment_record (consumer_id, type, money, ref_orders, create_user_id, create_time) VALUES (#{consumerId}, #{type}, #{money}, #{refOrders}, #{createUserId}, #{createTime});")
     @Options(useGeneratedKeys = true)
     int add(Payment payment);
 

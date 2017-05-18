@@ -8,7 +8,39 @@ import cn.pompeybrain.business.util.BaseBean;
  */
 public class Payment extends BaseBean {
     private int consumerId;
-    private int type;
+    private String type;
     private double money;
     private String refOrders;
+
+    public int getConsumerId() {
+        return consumerId;
+    }
+
+    public void setConsumerId(int consumerId) {
+        this.consumerId = consumerId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
+    }
+
+    public String getRefOrders() {
+        return refOrders;
+    }
+
+    public void setRefOrders(String refOrders) {
+        this.refOrders = refOrders;
+    }
 }

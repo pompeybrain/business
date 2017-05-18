@@ -152,7 +152,7 @@ CREATE TABLE payment_record
 (
   id             INT NOT NULL AUTO_INCREMENT,
   consumer_id    INT,
-  type           INT,
+  type           VARCHAR(32),
   money          DOUBLE,
   ref_orders     VARCHAR(10240),
   create_user_id INT,

@@ -1,6 +1,7 @@
 package cn.pompeybrain.business.commodity;
 
-import cn.pompeybrain.business.category.Category;
+import cn.pompeybrain.business.inventory.Inventory;
+import cn.pompeybrain.business.inventory.InventoryDao;
 import cn.pompeybrain.business.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,8 @@ public class CommodityController {
 
     @Autowired
     private CommodityService commodityService;
+    @Autowired
+    private InventoryDao inventoryDao;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Map<String, Object> list() {
@@ -36,9 +39,8 @@ public class CommodityController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    Commodity create(@RequestBody Commodity commodity) {
-        commodityService.create(commodity);
-        return commodity;
+    int create(@RequestBody Commodity commodity) {
+        return commodityService.create(commodity);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -46,6 +48,16 @@ public class CommodityController {
         if (!BaseUtil.checkId(id, commodity))
             return 0;
         return commodityService.update(commodity);
+    }
+
+    @RequestMapping(value = "/addInventory/{id}", method = RequestMethod.POST)
+    int addInventory(@PathVariable int id, @RequestBody Inventory inventory) {
+        Commodity commodity = commodityService.findById(id);
+        commodity.setInventory(inventory.getNewInventory());
+        commodityService.update(commodity);
+        BaseUtil.setCommon(inventory);
+        inventoryDao.add(inventory);
+        return inventory.getId();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

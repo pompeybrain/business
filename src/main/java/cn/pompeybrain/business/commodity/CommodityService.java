@@ -87,21 +87,21 @@ public class CommodityService {
     }
 
 
-    Commodity findById(int id) {
+    public Commodity findById(int id) {
         return commodityDao.findById(id);
     }
 
-    Commodity create(Commodity commodity) {
+    int create(Commodity commodity) {
         BaseUtil.setCommon(commodity);
         commodityDao.add(commodity);
-        return commodity;
+        return commodity.getId();
     }
 
     int delete(int id) {
         return commodityDao.delete(id);
     }
 
-    int update(Commodity commodity) {
+    public int update(Commodity commodity) {
         return commodityDao.update(commodity);
     }
 

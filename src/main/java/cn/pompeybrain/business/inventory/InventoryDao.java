@@ -14,15 +14,14 @@ public interface InventoryDao {
 
     @Insert("INSERT INTO inventory_record (commodity_id, old_inventory, addition, amount, cost, new_inventory, create_user_id, create_time) VALUES (#{commodityId},#{oldInventory},#{addition},#{amount},#{cost},#{newInventory},#{createUserId},#{createTime});")
     @Options(useGeneratedKeys = true)
-    int add(Commodity commodity);
+    int add(Inventory inventory);
 
     @Select("select * from inventory_record where id = #{id};")
-    Commodity findById(@Param("id") int id);
+    Inventory findById(@Param("id") int id);
 
     @Select("select * from inventory_record;")
-    List<Commodity> findAll();
+    List<Inventory> findAll();
 
     @Select("select * from inventory_record where commodity_id = #{commodityId};")
-    Commodity findByCommodity(@Param("commodityId") int commodityId);
-
+    Inventory findByCommodity(@Param("commodityId") int commodityId);
 }

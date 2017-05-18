@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -31,9 +32,9 @@ public class OrderController {
     public int create(@RequestBody Map<String, Object> orderForm) {
         try {
             return orderService.create(orderForm);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return -1;
+            return 0;
         }
     }
 
