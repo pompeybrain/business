@@ -6,10 +6,7 @@ import cn.pompeybrain.business.util.BaseUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.ibatis.reflection.ArrayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -41,6 +38,12 @@ public class OrderController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Order> list() {
         return null;
+    }
+
+    @RequestMapping(value = "/getByConsumer/{consumerId}", method = RequestMethod.GET)
+    public List<Order> getConsumerOrders(@PathVariable int consumerId) {
+        return orderService.findByConsumer(consumerId);
+
     }
 
     @RequestMapping(value = "{id}/repay", method = RequestMethod.PUT)

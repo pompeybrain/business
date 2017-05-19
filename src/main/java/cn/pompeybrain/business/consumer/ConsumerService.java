@@ -1,6 +1,8 @@
 package cn.pompeybrain.business.consumer;
 
-import cn.pompeybrain.business.commodity.Commodity;
+import cn.pompeybrain.business.order.Order;
+import cn.pompeybrain.business.order.OrderService;
+import cn.pompeybrain.business.payment.PaymentService;
 import cn.pompeybrain.business.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,13 @@ import java.util.Map;
 public class ConsumerService {
 
     @Autowired
-    ConsumerDao consumerDao;
+    private ConsumerDao consumerDao;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     public Consumer findById(int id) {
         return consumerDao.findById(id);
@@ -26,6 +34,38 @@ public class ConsumerService {
         BaseUtil.setCommon(consumer);
         consumerDao.add(consumer);
         return consumer;
+    }
+
+    public int repay(int id, List<Integer> orderIds, double repayment) {
+
+        StringBuilder refOrders = new StringBuilder();
+
+        //处理订单
+        for (int orderId : orderIds) {
+            Order order = orderService.findById(orderId);
+            if (repayment > order.getCredit()) {
+                repayment -= order.getCredit();
+                order.setCredit(0);
+                order.setPayments(order.getPayments() + repayment + ",");
+                order.setStatus(1); // 订单状态完成
+                orderService.update(order);
+                refOrders.append(orderId).append(",");
+            } else if (repayment > 0) {
+                order.setCredit(order.getCredit() - repayment);
+                order.setPayments(order.getPayments() + repayment + ",");
+                orderService.update(order);
+                refOrders.append(orderId).append(",");
+            } else {
+                break;
+            }
+        }
+        //付款记录
+        paymentService.create(id, repayment, refOrders.substring(0, refOrders.length() - 2), "repay");
+
+        //处理客户
+        Consumer consumer = consumerDao.findById(id);
+        consumer.setCredit(consumer.getCredit() - repayment);
+        return consumerDao.update(consumer);
     }
 
     public int delete(int id) {

@@ -21,7 +21,7 @@ public interface OrderDao {
     @Select("select * from `order` where id = #{id}")
     Order findById(@Param("id") int id);
 
-    @Select("select * from `order` where consumer_id = #{consumerId}")
+    @Select("select * from `order` where consumer_id = #{consumerId} and credit > 0 order by create_time asc")
     List<Order> findByConsumer(@Param("consumerId") int consumerId);
 
     @Select("select * from `order`;")

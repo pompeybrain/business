@@ -21,16 +21,16 @@ import java.util.Map;
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired
-    CategoryDao categoryDao;
+    private CategoryDao categoryDao;
 
     @RequestMapping("/available")
-    List<String> getAvailable() {
+    public List<String> getAvailable() {
         List<String> categories = categoryDao.findAvailable();
         return categories;
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    Map<String, List> list() {
+    public Map<String, List> list() {
         List<Category> rawRategories = categoryDao.findAll();
         Map<String, List> result = new HashMap<>();
         List<Category> availables = new ArrayList<>();
@@ -48,24 +48,24 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    Category create(@RequestBody Category category) {
+    public int create(@RequestBody Category category) {
         BaseUtil.setCommon(category);
         categoryDao.add(category);
-        return category;
+        return category.getId();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    Category get(@PathVariable int id) {
+    public Category get(@PathVariable int id) {
         return categoryDao.findById(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    int delete(@PathVariable int id) {
+    public int delete(@PathVariable int id) {
         return categoryDao.delete(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    int update(@PathVariable int id, @RequestBody Category category) {
+    public int update(@PathVariable int id, @RequestBody Category category) {
         if (!BaseUtil.checkId(id, category))
             return 0;
         return categoryDao.update(category);

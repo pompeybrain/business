@@ -16,6 +16,8 @@ public class Test {
         System.out.println("test");
         String testStr = "business/api/login";
         System.out.println(testStr.matches("(.*)/login$"));
+        double testDouble = 2;
+        System.out.println(testDouble > 0);
 //        System.out.println(createTime);
     }
 

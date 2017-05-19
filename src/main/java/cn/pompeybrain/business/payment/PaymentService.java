@@ -14,7 +14,9 @@ public class PaymentService {
     @Autowired
     private PaymentDao paymentDao;
 
-    public int create(Payment payment) {
+    public int create(int consumerId, double money, String refOrders, String type) {
+
+        Payment payment = new Payment();
         BaseUtil.setCommon(payment);
         return paymentDao.add(payment);
     }

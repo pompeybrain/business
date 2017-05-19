@@ -1,5 +1,6 @@
 package cn.pompeybrain.business.consumer;
 
+import cn.pompeybrain.business.order.Order;
 import cn.pompeybrain.business.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,15 @@ public class ConsumerController {
     Consumer create(@RequestBody Consumer consumer) {
         consumerService.create(consumer);
         return consumer;
+    }
+
+    @RequestMapping(value = "/repay/{id}", method = RequestMethod.POST)
+    int repay(@PathVariable int id, @RequestBody Map<String, Object> repayForm) {
+        System.out.println(id);
+        System.out.println(repayForm);
+        List<Integer> orderIds = (List<Integer>) repayForm.get("orders");
+        double repayment = Double.valueOf(repayForm.get("money").toString());
+        return consumerService.repay(id, orderIds, repayment);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

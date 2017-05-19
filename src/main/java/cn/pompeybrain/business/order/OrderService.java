@@ -2,10 +2,13 @@ package cn.pompeybrain.business.order;
 
 import cn.pompeybrain.business.commodity.Commodity;
 import cn.pompeybrain.business.commodity.CommodityService;
+import cn.pompeybrain.business.consumer.Consumer;
+import cn.pompeybrain.business.consumer.ConsumerService;
 import cn.pompeybrain.business.payment.Payment;
 import cn.pompeybrain.business.payment.PaymentService;
 import cn.pompeybrain.business.util.BaseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +31,23 @@ public class OrderService {
     private CommodityService commodityService;
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private ConsumerService consumerService;
 
     @Autowired
     ObjectMapper objectMapper;
+
+    public Order findById(int id) {
+        return orderDao.findById(id);
+    }
+
+    public List<Order> findByConsumer(int consumerId) {
+        return orderDao.findByConsumer(consumerId);
+    }
+
+    public int update(Order order) {
+        return orderDao.update(order);
+    }
 
     public int create(Map orderForm) throws Exception {
         Order order = new Order();
@@ -38,6 +55,7 @@ public class OrderService {
         int consumerId = (Integer) consumerMap.get("id");
         order.setConsumerId(consumerId);
         order.setConsumerName(consumerMap.get("name").toString());
+        //处理商品
         List<Map<String, Object>> commodities = objectMapper.readValue(orderForm.get("commodities").toString(), List.class);
         for (Map<String, Object> orderCommodity : commodities) {
             Commodity commodity = commodityService.findById((Integer) orderCommodity.get("id"));
@@ -51,21 +69,28 @@ public class OrderService {
             }
             commodityService.update(commodity);
         }
+
+        Double orderCredit = Double.valueOf(orderForm.get("payResult").toString());
+
+        //处理客户
+        if (orderCredit > 0) {
+            Consumer consumer = consumerService.findById(consumerId);
+            consumer.setCredit(consumer.getCredit() + orderCredit);
+            consumerService.update(consumer);
+        }
+
+        //处理订单
         order.setCommodities(orderForm.get("commodities").toString());
         order.setTotal(Double.valueOf(orderForm.get("totalAmount").toString()));
-        order.setCredit(Double.valueOf(orderForm.get("payResult").toString()));
+        order.setCredit(orderCredit);
         Double payment = Double.valueOf(orderForm.get("payment").toString());
         order.setPayments(payment + ",");
         order.setStatus((Integer) orderForm.get("status"));
         BaseUtil.setCommon(order);
         orderDao.add(order);
 
-        Payment paymentRecord = new Payment();
-        paymentRecord.setConsumerId(consumerId);
-        paymentRecord.setMoney(payment);
-        paymentRecord.setType("order");
-        paymentRecord.setRefOrders(order.getId() + ",");
-        paymentService.create(paymentRecord);
+        //处理付款记录
+        paymentService.create(consumerId, payment, String.valueOf(order.getId()), "order");
         return order.getId();
     }
 
