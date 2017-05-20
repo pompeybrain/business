@@ -46,9 +46,9 @@ public class OrderController {
 
     }
 
-    @RequestMapping(value = "{id}/repay", method = RequestMethod.PUT)
-    public int repay() {
-        return 0;
+    @RequestMapping(value = "/repay/{id}", method = RequestMethod.PUT)
+    public int repay(@PathVariable int id, @RequestParam double repayment) {
+        return orderService.repay(id, repayment);
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)

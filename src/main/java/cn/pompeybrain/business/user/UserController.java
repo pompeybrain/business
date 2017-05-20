@@ -48,6 +48,11 @@ public class UserController {
         return user.getId();
     }
 
+    @RequestMapping(value = "/roles", method = RequestMethod.GET)
+    List<Map<String, Object>> getRoles() {
+        return userDao.findRoles();
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     User update(@PathVariable int id) {
         return userDao.findById(id);

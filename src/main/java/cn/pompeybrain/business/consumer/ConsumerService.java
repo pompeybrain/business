@@ -7,6 +7,7 @@ import cn.pompeybrain.business.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class ConsumerService {
         return consumer;
     }
 
-    public int repay(int id, List<Integer> orderIds, double repayment) {
+    public int repayOrders(int id, List<Integer> orderIds, double repayment) {
 
         StringBuilder refOrders = new StringBuilder();
 
@@ -63,9 +64,17 @@ public class ConsumerService {
         paymentService.create(id, repayment, refOrders.substring(0, refOrders.length() - 2), "repay");
 
         //处理客户
+        return repay(id, repayment);
+    }
+
+    public int repay(int id, double repayment) {
         Consumer consumer = consumerDao.findById(id);
-        consumer.setCredit(consumer.getCredit() - repayment);
-        return consumerDao.update(consumer);
+        double oldCredit = consumer.getCredit();
+        if (repayment > oldCredit || oldCredit <= 0) {
+            return 0;
+        }
+        consumer.setCredit(oldCredit - repayment);
+        return update(consumer);
     }
 
     public int delete(int id) {
@@ -73,10 +82,11 @@ public class ConsumerService {
     }
 
     public int update(Consumer consumer) {
+        BaseUtil.updateTime(consumer);
         return consumerDao.update(consumer);
     }
 
-    public List<Consumer> search(Map<String, Object> condition) {
+    public Map<String, Object> search(Map<String, Object> condition) {
         int pageNo = Integer.parseInt(condition.get("pageNo").toString());
         int pageSize = Integer.parseInt(condition.get("pageSize").toString());
         int offset = (pageNo - 1) * pageSize;
@@ -84,6 +94,11 @@ public class ConsumerService {
             offset = 0;
         }
         condition.put("offset", offset);
-        return consumerDao.findByCondition(condition);
+        int counts = consumerDao.searchCount(condition);
+        List<Consumer> consumers = consumerDao.findByCondition(condition);
+        Map<String, Object> result = new HashMap<>();
+        result.put("consumers", consumers);
+        result.put("totalRows", counts);
+        return result;
     }
 }

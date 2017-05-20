@@ -14,7 +14,7 @@ import java.util.Map;
 @Mapper
 public interface ConsumerDao {
 
-    @Insert("INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time) VALUES (#{name},#{phone},#{address},#{credit},#{createUserId},#{createTime},#{updateTime});")
+    @Insert("INSERT INTO consumer (name, phone, address, create_user_id, create_time, update_time) VALUES (#{name}, #{phone}, #{address}, #{createUserId}, #{createTime}, #{updateTime});")
     @Options(useGeneratedKeys = true)
     int add(Consumer consumer);
 
@@ -30,11 +30,26 @@ public interface ConsumerDao {
     @Update("UPDATE consumer SET name = #{name}, phone = #{phone}, address = #{address}, credit = #{credit}, update_time = #{updateTime} where id = #{id}")
     int update(Consumer consumer);
 
+    @SelectProvider(type = ConsumerSqlProvider.class, method = "findCountByCondition")
+    int searchCount(Map<String, Object> condition);
 
-    @SelectProvider(type = UserSqlProvider.class, method = "findByCondition")
+    @SelectProvider(type = ConsumerSqlProvider.class, method = "findByCondition")
     List<Consumer> findByCondition(Map<String, Object> condition);
 
-    class UserSqlProvider {
+    class ConsumerSqlProvider {
+        public String findCountByCondition(Map<String, Object> condition) {
+            String sql = new SQL() {
+                {
+                    SELECT("count(*)");
+                    FROM("`consumer`");
+                    WHERE("name like #{name}");
+                    WHERE("phone like #{phone}");
+                    WHERE("address like #{address}");
+                }
+            }.toString();
+            return sql;
+        }
+
         public String findByCondition(Map<String, Object> condition) {
             String sql = new SQL() {
                 {

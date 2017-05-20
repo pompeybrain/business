@@ -15,8 +15,11 @@ public class PaymentService {
     private PaymentDao paymentDao;
 
     public int create(int consumerId, double money, String refOrders, String type) {
-
         Payment payment = new Payment();
+        payment.setConsumerId(consumerId);
+        payment.setType(type);
+        payment.setMoney(money);
+        payment.setRefOrders(refOrders);
         BaseUtil.setCommon(payment);
         return paymentDao.add(payment);
     }

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户表数据库接口
@@ -31,4 +32,7 @@ public interface UserDao {
 
     @Update("update user set name = #{name}, password_digest = #{passwordDigest}, phone = #{phone}, status = #{status}, update_time = #{updateTime} where id = #{id};")
     int update(User user);
+
+    @Select("select * from `role` order by id desc;")
+    List<Map<String, Object>> findRoles();
 }

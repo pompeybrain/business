@@ -72,12 +72,12 @@ public class OrderService {
 
         Double orderCredit = Double.valueOf(orderForm.get("payResult").toString());
 
-        //处理客户
-        if (orderCredit > 0) {
-            Consumer consumer = consumerService.findById(consumerId);
-            consumer.setCredit(consumer.getCredit() + orderCredit);
-            consumerService.update(consumer);
-        }
+//        //处理客户
+//        if (orderCredit > 0) {
+//            Consumer consumer = consumerService.findById(consumerId);
+//            consumer.setCredit(consumer.getCredit() + orderCredit);
+//            consumerService.update(consumer);
+//        }
 
         //处理订单
         order.setCommodities(orderForm.get("commodities").toString());
@@ -106,5 +106,30 @@ public class OrderService {
         dbResult.put("totalRows", orderDao.searchCount(condition));
         dbResult.put("orders", orderDao.search(condition));
         return dbResult;
+    }
+
+    public int repay(int id, double repayment) {
+        Order order = orderDao.findById(id);
+        double oldCredit = order.getCredit();
+
+        if (oldCredit <= 0 || repayment <= 0 || repayment > oldCredit) {
+            return 0;
+        }
+
+        int consumerId = order.getConsumerId();
+
+        //payment处理
+        paymentService.create(consumerId, repayment, String.valueOf(order.getId()), "repay");
+
+        //consumer处理
+        consumerService.repay(consumerId, repayment);
+
+        //order处理
+        order.setCredit(oldCredit - repayment);
+        order.setPayments(order.getPayments() + repayment + ",");
+        if (order.getCredit() == 0) {
+            order.setStatus(1);
+        }
+        return orderDao.update(order);
     }
 }

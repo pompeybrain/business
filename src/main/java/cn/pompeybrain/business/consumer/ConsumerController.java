@@ -20,7 +20,10 @@ public class ConsumerController {
     private ConsumerService consumerService;
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public List<Consumer> list(@RequestBody Map<String, Object> condition) {
+    public Map<String, Object> list(@RequestBody Map<String, Object> condition) {
+        condition.put("name", "%" + condition.get("name") + "%");
+        condition.put("phone", "%" + condition.get("phone") + "%");
+        condition.put("address", "%" + condition.get("address") + "%");
         return consumerService.search(condition);
     }
 
@@ -30,9 +33,9 @@ public class ConsumerController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    Consumer create(@RequestBody Consumer consumer) {
+    int create(@RequestBody Consumer consumer) {
         consumerService.create(consumer);
-        return consumer;
+        return consumer.getId();
     }
 
     @RequestMapping(value = "/repay/{id}", method = RequestMethod.POST)
@@ -41,7 +44,7 @@ public class ConsumerController {
         System.out.println(repayForm);
         List<Integer> orderIds = (List<Integer>) repayForm.get("orders");
         double repayment = Double.valueOf(repayForm.get("money").toString());
-        return consumerService.repay(id, orderIds, repayment);
+        return consumerService.repayOrders(id, orderIds, repayment);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
