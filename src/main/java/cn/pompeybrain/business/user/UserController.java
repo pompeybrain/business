@@ -42,6 +42,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     int create(@RequestBody User user) {
+        BaseUtil.setCommon(user);
         userDao.add(user);
         return user.getId();
     }
@@ -55,6 +56,7 @@ public class UserController {
     int update(@PathVariable int id, @RequestBody User user) {
         if (!BaseUtil.checkId(id, user))
             return 0;
+        BaseUtil.updateTime(user);
         return userDao.update(user);
     }
 
@@ -77,5 +79,11 @@ public class UserController {
             return user.getId();
         }
         return 0;
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    int logout(HttpSession session) {
+        session.invalidate();
+        return 1;
     }
 }

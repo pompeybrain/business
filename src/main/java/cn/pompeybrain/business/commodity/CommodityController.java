@@ -19,8 +19,7 @@ public class CommodityController {
 
     @Autowired
     private CommodityService commodityService;
-    @Autowired
-    private InventoryDao inventoryDao;
+
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Map<String, Object> list() {
@@ -52,12 +51,8 @@ public class CommodityController {
 
     @RequestMapping(value = "/addInventory/{id}", method = RequestMethod.POST)
     int addInventory(@PathVariable int id, @RequestBody Inventory inventory) {
-        Commodity commodity = commodityService.findById(id);
-        commodity.setInventory(inventory.getNewInventory());
-        commodityService.update(commodity);
-        BaseUtil.setCommon(inventory);
-        inventoryDao.add(inventory);
-        return inventory.getId();
+        return commodityService.addInventory(id, inventory);
+
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

@@ -21,7 +21,7 @@ public interface UserDao {
     @Select("select * from user where id = #{id}")
     User findById(int id);
 
-    @Select("select * from user where name = #{name} and password_digest = #{passwordDigest};")
+    @Select("select * from user where name = #{name} and password_digest = #{passwordDigest} and status = 1;")
     User findByNameAndPassword(@Param("name") String name, @Param("passwordDigest") String passwordDigest);
 
     @Select("select * from user;")

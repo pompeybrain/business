@@ -43,7 +43,7 @@ public class ConsumerController {
         System.out.println(id);
         System.out.println(repayForm);
         List<Integer> orderIds = (List<Integer>) repayForm.get("orders");
-        double repayment = Double.valueOf(repayForm.get("money").toString());
+        double repayment = Double.valueOf(repayForm.get("repayment").toString());
         return consumerService.repayOrders(id, orderIds, repayment);
     }
 

@@ -23,10 +23,8 @@ public class AuthenticateFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         HttpSession session = request.getSession(false); // 不新建session
         String requestUrl = request.getRequestURI();
-        if (request.getRequestURI().matches("(.*)/logout$")) {
-            session.invalidate();
-            System.out.println("logout!");
-        } else if (!requestUrl.matches("(.*)/login$") && (session == null || session.getAttribute("user") == null)) {
+        String method = request.getMethod();
+        if (!requestUrl.matches("(.*)/login$") && !requestUrl.matches("(.*)/login$") && !method.equals("OPTIONS") && (session == null || session.getAttribute("user") == null)) {
             PrintWriter out = response.getWriter();
             out.println("not-login");
         } else {

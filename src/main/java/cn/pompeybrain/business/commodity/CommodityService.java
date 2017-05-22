@@ -1,6 +1,8 @@
 package cn.pompeybrain.business.commodity;
 
 import cn.pompeybrain.business.category.CategoryDao;
+import cn.pompeybrain.business.inventory.Inventory;
+import cn.pompeybrain.business.inventory.InventoryDao;
 import cn.pompeybrain.business.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class CommodityService {
     private CategoryDao categoryDao;
     @Autowired
     private CommodityDao commodityDao;
+    @Autowired
+    private InventoryDao inventoryDao;
 
     /*
     * 按照可用分类获取商品列表
@@ -102,16 +106,20 @@ public class CommodityService {
     }
 
     public int update(Commodity commodity) {
+        BaseUtil.updateTime(commodity);
         return commodityDao.update(commodity);
     }
 
-    int addInventory(int id, double amount, int increment) {
-        Commodity commodity = commodityDao.findById(id);
-        int newInventory = commodity.getInventory() + increment;
-        double newCost = (commodity.getCost() * commodity.getInventory() + amount) / newInventory;
+    int addInventory(int id, Inventory inventory) {
+        Commodity commodity = findById(id);
+        int newInventory = inventory.getNewInventory();
+        double newCost = (commodity.getCost() * commodity.getInventory() + inventory.getAmount()) / newInventory;
         commodity.setInventory(newInventory);
         commodity.setCost(newCost);
-        return commodityDao.update(commodity);
-    }
+        update(commodity);
 
+        BaseUtil.setCommon(inventory);
+        inventoryDao.add(inventory);
+        return inventory.getId();
+    }
 }
