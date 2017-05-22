@@ -40,29 +40,29 @@ public class ConsumerService {
     public int repayOrders(int id, List<Integer> orderIds, double repayment) {
 
         StringBuilder refOrders = new StringBuilder();
-
+        double repayMoney = repayment;
         //处理订单
         for (int orderId : orderIds) {
             Order order = orderService.findById(orderId);
-            if (repayment > order.getCredit()) {
-                repayment -= order.getCredit();
+            if (repayMoney >= order.getCredit()) {
+                repayMoney -= order.getCredit();
+                order.setPayments(order.getPayments() + order.getCredit() + ",");
                 order.setCredit(0);
-                order.setPayments(order.getPayments() + repayment + ",");
                 order.setStatus(1); // 订单状态完成
                 orderService.update(order);
                 refOrders.append(orderId).append(",");
-            } else if (repayment > 0) {
-                order.setCredit(order.getCredit() - repayment);
-                order.setPayments(order.getPayments() + repayment + ",");
+            } else if (repayMoney > 0) {
+                order.setCredit(order.getCredit() - repayMoney);
+                order.setPayments(order.getPayments() + repayMoney + ",");
                 orderService.update(order);
-                refOrders.append(orderId).append(",");
+                refOrders.append(orderId);
+                break;
             } else {
                 break;
             }
         }
         //付款记录
-        paymentService.create(id, repayment, refOrders.substring(0, refOrders.length() - 2), "repay");
-
+        paymentService.create(id, repayment, String.valueOf(refOrders), "repay");
         //处理客户
         return repay(id, repayment);
     }

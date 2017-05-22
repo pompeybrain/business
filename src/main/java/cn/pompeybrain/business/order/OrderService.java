@@ -72,12 +72,12 @@ public class OrderService {
 
         Double orderCredit = Double.valueOf(orderForm.get("payResult").toString());
 
-//        //处理客户
-//        if (orderCredit > 0) {
-//            Consumer consumer = consumerService.findById(consumerId);
-//            consumer.setCredit(consumer.getCredit() + orderCredit);
-//            consumerService.update(consumer);
-//        }
+        //处理客户
+        if (orderCredit > 0) {
+            Consumer consumer = consumerService.findById(consumerId);
+            consumer.setCredit(consumer.getCredit() + orderCredit);
+            consumerService.update(consumer);
+        }
 
         //处理订单
         order.setCommodities(orderForm.get("commodities").toString());
@@ -90,7 +90,9 @@ public class OrderService {
         orderDao.add(order);
 
         //处理付款记录
-        paymentService.create(consumerId, payment, String.valueOf(order.getId()), "order");
+        if (payment > 0) {
+            paymentService.create(consumerId, payment, String.valueOf(order.getId()), "order");
+        }
         return order.getId();
     }
 

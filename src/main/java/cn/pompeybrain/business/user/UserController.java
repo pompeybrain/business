@@ -1,7 +1,5 @@
 package cn.pompeybrain.business.user;
 
-import cn.pompeybrain.business.category.Category;
-import cn.pompeybrain.business.commodity.Commodity;
 import cn.pompeybrain.business.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,17 +26,17 @@ public class UserController {
     Map<String, List> list() {
         List<User> rawUsers = userDao.findAll();
         Map<String, List> result = new HashMap<>();
-        List<User> availables = new ArrayList<>();
-        List<User> unavailables = new ArrayList<>();
+        List<User> availableUsers = new ArrayList<>();
+        List<User> unavailableUsers = new ArrayList<>();
         for (User user : rawUsers) {
             if (user.isStatus()) {
-                availables.add(user);
+                availableUsers.add(user);
             } else {
-                unavailables.add(user);
+                unavailableUsers.add(user);
             }
         }
-        result.put("availables", availables);
-        result.put("unavailables", unavailables);
+        result.put("availableUsers", availableUsers);
+        result.put("unavailableUsers", unavailableUsers);
         return result;
     }
 
@@ -51,11 +49,6 @@ public class UserController {
     @RequestMapping(value = "/roles", method = RequestMethod.GET)
     List<Map<String, Object>> getRoles() {
         return userDao.findRoles();
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    User update(@PathVariable int id) {
-        return userDao.findById(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

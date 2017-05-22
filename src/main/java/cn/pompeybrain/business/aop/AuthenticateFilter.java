@@ -17,7 +17,7 @@ import java.io.PrintWriter;
  * Created by Administrator on 2017/5/12 0012.
  */
 @WebFilter(filterName = "authenticateFilter", urlPatterns = "/*")
-//@Component
+@Component
 public class AuthenticateFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
