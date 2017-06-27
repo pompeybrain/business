@@ -1,6 +1,5 @@
 package cn.pompeybrain.business.consumer;
 
-import cn.pompeybrain.business.order.Order;
 import cn.pompeybrain.business.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

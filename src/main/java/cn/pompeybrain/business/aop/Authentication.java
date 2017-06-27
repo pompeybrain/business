@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * Created by Administrator on 2017/5/12 0012.
  */
 @Aspect
-@Component
+//@Component
 public class Authentication {
 
     @Pointcut("execution(* cn.pompeybrain.business.*.*Controller.*(..))")

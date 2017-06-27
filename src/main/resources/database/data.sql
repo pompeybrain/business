@@ -118,3 +118,13 @@ VALUES ('范佳慧', '13153802835', '云梦县', 0, 1, '2017-05-10 12:00:00',
 INSERT INTO consumer (name, phone, address, credit, create_user_id, create_time, update_time)
 VALUES ('刘永杰', '13632577363', '开县', 0, 1, '2017-04-10 12:00:00',
         '2017-04-21 14:00:00');
+
+
+/*==============================================================*/
+/* some useful sql                                              */
+/*==============================================================*/
+SELECT *
+FROM consumer
+WHERE name LIKE #{name} AND phone LIKE #{phone} AND address LIKE #{address}
+ORDER BY update_time DESC
+LIMIT #{offset}, #{pageSize}

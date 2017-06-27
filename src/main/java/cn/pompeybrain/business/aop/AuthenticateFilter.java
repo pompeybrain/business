@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * 登录过滤器
@@ -20,15 +19,23 @@ import java.io.PrintWriter;
 @Component
 public class AuthenticateFilter extends OncePerRequestFilter {
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException
+    {
         HttpSession session = request.getSession(false); // 不新建session
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
-        if (!requestUrl.matches("(.*)/login$") && !requestUrl.matches("(.*)/login$") && !method.equals("OPTIONS") && (session == null || session.getAttribute("user") == null)) {
-            PrintWriter out = response.getWriter();
-            out.println("not-login");
-        } else {
+        if (requestUrl.matches("(.*)/login$") || method.equals("OPTIONS") || requestUrl.matches("(.*)/util/")) {
             filterChain.doFilter(request, response);
+        } else if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect("/util/notLogin");
+        } else {
+            int roleId = (Integer) session.getAttribute("role");
+            if (requestUrl.matches("(.*)/user") && roleId == 1) {
+                filterChain.doFilter(request, response);
+            } else {
+                response.sendRedirect("/util/authorityError");
+            }
         }
     }
 }
