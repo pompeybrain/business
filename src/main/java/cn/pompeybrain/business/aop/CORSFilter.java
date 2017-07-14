@@ -5,8 +5,11 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 跨域过滤器
@@ -25,9 +28,9 @@ public class CORSFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
-        httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
-
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", httpServletRequest.getHeader("origin"));
 
         httpServletResponse
                 .setHeader(
@@ -37,7 +40,6 @@ public class CORSFilter implements Filter {
 
         httpServletResponse.setHeader("Access-Control-Allow-Credentials",
                 "true");
-
 
         httpServletResponse.setHeader("Access-Control-Allow-Methods",
                 "GET, POST, PUT, DELETE, OPTIONS, HEAD");
